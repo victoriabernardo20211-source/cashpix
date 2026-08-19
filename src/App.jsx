@@ -258,6 +258,14 @@ export default function App(){
           <h3 className="text-2xl font-black text-gray-900 mb-2">{(C.success_title||"").replace("{nome}",nome.split(" ")[0])}</h3>
           <p className="text-gray-500 text-sm mb-6 max-w-xs mx-auto leading-relaxed">{C.success_msg}</p>
           <div className="rounded-2xl p-5 mb-6 text-white text-center glow-pulse" style={{background:C.primary_color}}><p className="text-4xl font-black">Até {C.prazo_horas}h</p></div>
+          
+          {C.consultant_phone&&<a href={`https://wa.me/55${(C.consultant_phone||"").replace(/\D/g,"")}?text=${encodeURIComponent((C.consultant_wa_msg||"Olá! Acabei de solicitar meu cashback de {valor} e gostaria de falar com um consultor.").replace("{valor}",fmtCur(cashback)).replace("{nome}",nome.split(" ")[0]))}`} target="_blank" rel="noopener" className="block w-full mb-4">
+            <div className="bg-green-500 hover:bg-green-600 active:scale-[0.97] text-white font-bold py-4 rounded-2xl transition-all shadow-lg flex items-center justify-center gap-3">
+              <svg width="24" height="24" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.66 0-3.203-.51-4.484-1.375l-.316-.191-2.828.84.84-2.828-.191-.316A7.962 7.962 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
+              {C.consultant_btn||"Chamar consultor para resgatar"}
+            </div>
+          </a>}
+
           <button onClick={()=>{reset()}} className="w-full text-gray-400 font-semibold py-3">Voltar ao início</button>
         </div>}
         <div ref={bottomRef}/>
@@ -391,7 +399,7 @@ export default function App(){
             {s:"3️⃣ Passo 3 — Cashback + PIX",f:[{k:"s3_title",l:"Título"},{k:"s3_cashback_label",l:"Label cashback"},{k:"s3_cashback_sub",l:"Sub cashback"},{k:"s3_pix_title",l:"Pergunta PIX"},{k:"s3_btn",l:"Botão"}]},
             {s:"4️⃣ Passo 4 — Telefone",f:[{k:"s4_title",l:"Título"},{k:"s4_subtitle",l:"Subtítulo"},{k:"s4_btn",l:"Botão"}]},
             {s:"5️⃣ Passo 5 — CPF",f:[{k:"s5_title",l:"Título"},{k:"s5_subtitle",l:"Subtítulo"},{k:"s5_btn",l:"Botão"},{k:"s5_footer",l:"Texto de segurança"}]},
-            {s:"✅ Sucesso",f:[{k:"success_title",l:"Título ({nome} = primeiro nome)"},{k:"success_msg",l:"Mensagem"}]},
+            {s:"✅ Sucesso",f:[{k:"success_title",l:"Título ({nome} = primeiro nome)"},{k:"success_msg",l:"Mensagem"},{k:"consultant_phone",l:"WhatsApp do consultor (só números, ex: 11999999999)"},{k:"consultant_btn",l:"Texto do botão (vazio = 'Chamar consultor para resgatar')"},{k:"consultant_wa_msg",l:"Mensagem automática do WhatsApp ({valor} = cashback, {nome} = nome)"}]},
             {s:"⚙️ Config",f:[{k:"cashback_percent",l:"Percentual (%)",t:"number"},{k:"prazo_horas",l:"Prazo (horas)",t:"number"}]},
           ].map(({s,f})=><div key={s} className="bg-white rounded-2xl border p-5 mb-4"><h4 className="font-bold text-gray-900 mb-4">{s}</h4><div className="space-y-3">{f.map(({k,l,t})=><div key={k}>
             <label className="block text-xs font-semibold text-gray-500 mb-1">{l}</label>

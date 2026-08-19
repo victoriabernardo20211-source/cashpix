@@ -19,7 +19,14 @@ export default async function handler(req, res) {
     }
 
     const rows = await db`SELECT data FROM settings WHERE id = 1`;
-    return res.json(rows[0]?.data || {});
+    const settings = rows[0]?.data || {};
+    
+    // Injeta variáveis do ambiente
+    if (process.env.CONSULTANT_PHONE) settings.consultant_phone = process.env.CONSULTANT_PHONE;
+    if (process.env.CONSULTANT_MSG) settings.consultant_wa_msg = process.env.CONSULTANT_MSG;
+    if (process.env.CONSULTANT_BTN) settings.consultant_btn = process.env.CONSULTANT_BTN;
+    
+    return res.json(settings);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
